@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewMovementConfig", menuName = "Game Configs/Movement Config")]
+[CreateAssetMenu(fileName = "NewMovementConfig", menuName = "Game Configs/Reference Movement Config")]
 public class ReferenceMovementConfig : ScriptableObject
 {
     public float targetMoveSpeed = 5f;

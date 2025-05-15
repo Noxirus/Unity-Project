@@ -20,8 +20,10 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Enable();
         
         _gameControls.Player.Move.performed += OnMovePerformed;
+        _gameControls.Player.Move.canceled += OnMoveCancelled;
         _gameControls.Player.Jump.performed += OnJumpPerformed;
-        _gameControls.Player.Jump.canceled += OnJumpCanceled;
+        _gameControls.Player.Jump.canceled += OnJumpCancelled;
+        
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -29,12 +31,17 @@ public class InputController : MonoBehaviour
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
+    private void OnMoveCancelled(InputAction.CallbackContext context)
+    {
+        MoveEvent?.Invoke(Vector2.zero);
+    }
+
     private void OnJumpPerformed(InputAction.CallbackContext context)
     {
         JumpEvent?.Invoke();
     }
 
-    private void OnJumpCanceled(InputAction.CallbackContext context)
+    private void OnJumpCancelled(InputAction.CallbackContext context)
     {
         JumpEventCancelled?.Invoke();
     }

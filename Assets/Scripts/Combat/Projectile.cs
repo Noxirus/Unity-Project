@@ -1,16 +1,13 @@
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected float projectileSpeed = 10f;
+    [SerializeField] private float projectileLifeTime = 3f;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Destroy(gameObject, projectileLifeTime);
     }
 }

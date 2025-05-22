@@ -9,6 +9,8 @@ public class InputController : MonoBehaviour
     public event Action JumpEvent;
     public event Action JumpEventCancelled;
     public event Action<Vector2> MoveEvent;
+
+    public event Action<Vector2> LookEvent;
     
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Move.canceled += OnMoveCancelled;
         _gameControls.Player.Jump.performed += OnJumpPerformed;
         _gameControls.Player.Jump.canceled += OnJumpCancelled;
+        _gameControls.Player.Look.performed += OnLookPerformed;
+        _gameControls.Player.Look.canceled += OnLookCancelled;
         
     }
 
@@ -34,6 +38,16 @@ public class InputController : MonoBehaviour
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(Vector2.zero);
+    }
+
+    private void OnLookPerformed(InputAction.CallbackContext context)
+    {
+        LookEvent?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    private void OnLookCancelled(InputAction.CallbackContext context)
+    {
+        LookEvent?.Invoke(Vector2.zero);
     }
 
     private void OnJumpPerformed(InputAction.CallbackContext context)

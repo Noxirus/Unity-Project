@@ -8,4 +8,5 @@ public class MovementConfig : ScriptableObject
     public float gravityMultiplier = 5f;
     public float accelerationRate = 10f;
     public float airAccelerationRate = 2f;
+    public float lookSpeed = .2f;
 }

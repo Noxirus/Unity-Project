@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MovementConfig movementConfig;
     private Vector2 _moveInput;
     private Vector3 _currentVelocity;
+    
+    [Header("Look Rotation")]
+    [SerializeField] private Transform lookTarget;
+    private Vector2 _lookRotation;
     
     private void Awake()
     {
@@ -29,12 +32,13 @@ public class PlayerMovement : MonoBehaviour
         {
             _inputController.MoveEvent += HandleMoveInput;
             _inputController.JumpEvent += Jump;
+            _inputController.LookEvent += HandleLookRotation;
         }
     }
 
     private void Update()
     {
-        Vector3 targetDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
+        Vector3 targetDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
         Vector3 targetVelocity = targetDirection * movementConfig.targetMoveSpeed;
         
         float accel = IsGrounded() ? movementConfig.accelerationRate : movementConfig.airAccelerationRate;
@@ -46,11 +50,19 @@ public class PlayerMovement : MonoBehaviour
         }
         
         _characterController.Move(_currentVelocity * Time.deltaTime);
+        
+        transform.Rotate(Vector3.up, _lookRotation.x * movementConfig.lookSpeed);
+        lookTarget.Rotate(Vector3.right, -_lookRotation.y * movementConfig.lookSpeed);
     }
 
     private void HandleMoveInput(Vector2 movement)
     {
         _moveInput = movement;
+    }
+
+    private void HandleLookRotation(Vector2 lookRotation)
+    {
+        _lookRotation = lookRotation;
     }
     
     private void Jump()

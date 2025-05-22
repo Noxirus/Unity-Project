@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     private InputController _inputController;
+    [SerializeField] private Weapon equippedWeapon;
 
     private void Awake()
     {
@@ -18,11 +19,10 @@ public class PlayerCombat : MonoBehaviour
 
     void FireWeapon()
     {
-        Debug.Log("Firing the weapon!");
+        equippedWeapon.Fire();
     }
     void StopFiring()
     {
         Debug.Log("Stopped Firing!");
-        
     }
 }

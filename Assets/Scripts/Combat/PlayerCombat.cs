@@ -23,6 +23,6 @@ public class PlayerCombat : MonoBehaviour
     }
     void StopFiring()
     {
-        Debug.Log("Stopped Firing!");
+        equippedWeapon.StopFiring();
     }
 }

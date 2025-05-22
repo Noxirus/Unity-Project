@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HitscanWeapon : Weapon
 {
+    [Header("Hitscan Details")]
     [SerializeField] float range = 100f;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private ParticleSystem hitParticles;

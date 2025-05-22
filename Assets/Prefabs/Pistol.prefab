@@ -131,10 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf13e0735cb94e42b7bd089998a1298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.1
-  bAutomatic: 1
   muzzle: {fileID: 2431303532932545657}
+  fireRate: 0.1
+  bAutomatic: 0
   maxAmmo: 20
+  ammoCost: 1
   range: 100
   targetMask:
     serializedVersion: 2

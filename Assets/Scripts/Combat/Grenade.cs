@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Grenade : Projectile
 {
+    [Header("Grenade Details")]
     [SerializeField] private int numberOfBounces = 3;
     private Rigidbody _rigidbody;
 
@@ -35,10 +36,6 @@ public class Grenade : Projectile
     void Explode()
     {
         Debug.Log("Kaboom!");
-        // Sphere cast all, damage anything it hits.
-        // Maybe add a impulse force to surrounding objects
-        // Play Particle effects here
-        
         Destroy(gameObject);
     }
 }

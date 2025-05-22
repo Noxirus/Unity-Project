@@ -1,14 +1,19 @@
-using System;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
     private InputController _inputController;
+    
+    [Header("Weapon Details")]
     [SerializeField] private Weapon equippedWeapon;
 
     private void Awake()
     {
         _inputController = GetComponent<InputController>();
+        if (equippedWeapon == null)
+        {
+            equippedWeapon = GetComponentInChildren<Weapon>();
+        }
     }
 
     private void Start()

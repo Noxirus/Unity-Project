@@ -1,17 +1,19 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
     [Header("Weapon Details")]
-    [SerializeField] private float fireRate = .2f;
-    [SerializeField] private bool bAutomatic = false;
     [SerializeField] protected Transform muzzle;
-    [SerializeField] private int maxAmmo;
-    private int _currentAmmo;
-    private bool _onCooldown;
+    [SerializeField] private float fireRate = .2f;
+    [SerializeField] private bool bAutomatic;
     private bool _autoActive;
+    private bool _onCooldown;
+    
+    [Header("Ammunition Details")]
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private int ammoCost = 1;
+    private int _currentAmmo;
     
     private void Start()
     {
@@ -28,22 +30,22 @@ public class Weapon : MonoBehaviour
 
     public virtual void Fire()
     {
-        _currentAmmo--;
-        StartCoroutine(FireCooldown());
+        _currentAmmo = Mathf.Clamp(_currentAmmo - ammoCost, 0, maxAmmo);
+        StartCoroutine(InitiateFireCooldown());
         if(bAutomatic) _autoActive = true;
     }
 
     public void StopFiring()
     {
-        _autoActive = false;
+        if(bAutomatic) _autoActive = false;
     }
 
     protected bool CanShoot()
     {
-        return _currentAmmo > 0 && !_onCooldown;
+        return _currentAmmo > ammoCost && !_onCooldown;
     }
 
-    IEnumerator FireCooldown()
+    IEnumerator InitiateFireCooldown()
     {
         _onCooldown = true;
         yield return new WaitForSeconds(fireRate);

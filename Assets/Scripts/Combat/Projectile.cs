@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [Header("Base Projectile Settings")]
+    [Header("Base Projectile Details")]
     [SerializeField] protected float projectileSpeed = 10f;
     [SerializeField] protected float projectileLifeTime = 3f;
     [SerializeField] protected ParticleSystem impactParticles;

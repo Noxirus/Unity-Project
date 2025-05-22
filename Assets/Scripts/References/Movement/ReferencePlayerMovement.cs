@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class ReferencePlayerMovement : MonoBehaviour
 {
-    private InputController _inputController;
+    private ReferenceInputController _inputController;
     private CharacterController _characterController;
     
     [Header("Movement")]
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] private MovementConfig movementConfig;
+    [SerializeField] private ReferenceMovementConfig movementConfig;
     private Vector2 _moveInput;
     private Vector3 _currentVelocity;
     
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Awake()
     {
-        _inputController = GetComponent<InputController>();
+        _inputController = GetComponent<ReferenceInputController>();
         _characterController = GetComponent<CharacterController>();
     }
 

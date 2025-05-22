@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ProjectileWeapon : Weapon
 {
-    [SerializeField] Projectile projectile;
+    [SerializeField] private Projectile projectile;
 
     public override void Fire()
     {

@@ -1,20 +1,20 @@
-using System;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private int maxAmmo;
-    private int _currentAmmo;
+    [Header("Weapon Details")]
     [SerializeField] private float fireRate = .2f;
     [SerializeField] private bool bAutomatic = false;
     [SerializeField] protected Transform muzzle;
+    [SerializeField] private int maxAmmo;
+    private int _currentAmmo;
 
     private void Start()
     {
         _currentAmmo = maxAmmo;
     }
 
-    virtual public void Fire()
+    public virtual void Fire()
     {
         _currentAmmo--;
         // Start shooting cooldown

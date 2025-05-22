@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 30
   projectileLifeTime: 3
+  impactParticles: {fileID: 2457733634814291136, guid: 6bb5d09a40ff4a74982454419c4e04cd, type: 3}
 --- !u!54 &-2864188960070123032
 Rigidbody:
   m_ObjectHideFlags: 0

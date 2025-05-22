@@ -6,12 +6,14 @@ public class ReferenceInputController : MonoBehaviour
 {
     private GameControls _gameControls;
 
-    public event Action<Vector2> MoveEvent;
-    public event Action<Vector2> LookEvent;
     public event Action JumpEvent;
-    public event Action JumpCancelledEvent;
     public event Action FireEvent;
+    public event Action FireEventCancelled;
+    public event Action JumpEventCancelled;
+    public event Action<Vector2> MoveEvent;
 
+    public event Action<Vector2> LookEvent;
+    
     private void Awake()
     {
         _gameControls = new GameControls();
@@ -19,64 +21,56 @@ public class ReferenceInputController : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameControls.Player.Enable(); // Enable the "Player" Action Map
-
+        _gameControls.Player.Enable();
+        
         _gameControls.Player.Move.performed += OnMovePerformed;
-        _gameControls.Player.Move.canceled += OnMoveCanceled;
+        _gameControls.Player.Move.canceled += OnMoveCancelled;
         _gameControls.Player.Jump.performed += OnJumpPerformed;
         _gameControls.Player.Jump.canceled += OnJumpCancelled;
         _gameControls.Player.Look.performed += OnLookPerformed;
         _gameControls.Player.Look.canceled += OnLookCancelled;
         _gameControls.Player.Attack.performed += OnFirePerformed;
+        _gameControls.Player.Attack.canceled += OnFireCancelled;
+        
     }
 
-    private void OnDisable()
+    private void OnFirePerformed(InputAction.CallbackContext context)
     {
-        _gameControls.Player.Enable(); // Enable the "Player" Action Map
+        FireEvent?.Invoke();
+    }
 
-        _gameControls.Player.Move.performed -= OnMovePerformed;
-        _gameControls.Player.Move.canceled -= OnMoveCanceled;
-        _gameControls.Player.Jump.performed -= OnJumpPerformed;
-        _gameControls.Player.Jump.canceled -= OnJumpCancelled;
-        _gameControls.Player.Look.performed -= OnLookPerformed;
-        _gameControls.Player.Look.canceled -= OnLookCancelled;
-        _gameControls.Player.Attack.performed -= OnFirePerformed;
+    private void OnFireCancelled(InputAction.CallbackContext context)
+    {
+        FireEventCancelled?.Invoke();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
     }
-    
-    private void OnMoveCanceled(InputAction.CallbackContext context)
+
+    private void OnMoveCancelled(InputAction.CallbackContext context)
     {
-        MoveEvent?.Invoke(Vector2.zero); // Send zero vector when input stops
+        MoveEvent?.Invoke(Vector2.zero);
     }
-    
+
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
         LookEvent?.Invoke(context.ReadValue<Vector2>());
     }
-    
+
     private void OnLookCancelled(InputAction.CallbackContext context)
     {
         LookEvent?.Invoke(Vector2.zero);
     }
-    
-// Similar handlers for OnJumpPerformed, OnLookPerformed, OnFirePerformed, etc.
-// For example:
+
     private void OnJumpPerformed(InputAction.CallbackContext context)
     {
         JumpEvent?.Invoke();
     }
-    
+
     private void OnJumpCancelled(InputAction.CallbackContext context)
     {
-        JumpCancelledEvent?.Invoke();
-    }
-    
-    private void OnFirePerformed(InputAction.CallbackContext context)
-    {
-        FireEvent?.Invoke();
+        JumpEventCancelled?.Invoke();
     }
 }

@@ -29,6 +29,7 @@ public class RangedWeapon : Weapon
     {
         base.Use();
         _currentAmmo = Mathf.Clamp(_currentAmmo - ammoCost, 0, maxAmmo);
+        Debug.Log(_currentAmmo);
         if(bAutomatic) _autoActive = true;
     }
     
@@ -39,6 +40,6 @@ public class RangedWeapon : Weapon
     
     protected bool CanShoot()
     {
-        return _currentAmmo > ammoCost && !_onCooldown;
+        return _currentAmmo >= ammoCost && !_onCooldown;
     }
 }

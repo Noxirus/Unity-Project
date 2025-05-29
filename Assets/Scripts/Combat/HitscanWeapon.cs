@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class HitscanWeapon : Weapon
+public class HitscanWeapon : RangedWeapon
 {
     [Header("Hitscan Details")]
     [SerializeField] float range = 100f;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private ParticleSystem hitParticles;
     
-    public override void Fire()
+    public override void Use()
     {
         if (!CanShoot()) return;
-        base.Fire();
+        base.Use();
         
         Debug.DrawRay(muzzle.transform.position, muzzle.transform.up * range, Color.red, 5f);
         if (Physics.Raycast(muzzle.transform.position, muzzle.transform.up, out RaycastHit hit, range, targetMask))

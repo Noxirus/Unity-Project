@@ -607,6 +607,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7832744092592020670, guid: 570d0892efeebff478299f0ede5c71be, type: 3}
+      propertyPath: weaponCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7983351991246809261, guid: 570d0892efeebff478299f0ede5c71be, type: 3}
       propertyPath: m_Name
       value: AssaultRifle
@@ -708,9 +712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bbeb26b1a0c4b47a0336c462ea575f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzle: {fileID: 1348748134}
-  fireRate: 0.2
+  weaponCooldown: 0.2
   bAutomatic: 0
+  muzzle: {fileID: 1348748134}
   maxAmmo: 100
   ammoCost: 1
   projectile: {fileID: 1416514328199062573, guid: 14540481cb3aa8f4da31f4fecb691e15, type: 3}

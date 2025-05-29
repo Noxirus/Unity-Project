@@ -15,6 +15,8 @@ public class InputController : MonoBehaviour
     public event Action AttackEvent;
     public event Action AttackEventCancelled;
     
+    public event Action<int> EquipEvent;
+    
     private void Awake()
     {
         _gameControls = new GameControls();
@@ -32,6 +34,7 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Look.canceled += OnLookCancelled;
         _gameControls.Player.Attack.performed += OnAttackPerformed;
         _gameControls.Player.Attack.canceled += OnAttackCancelled;
+        _gameControls.Player.EquipItem.performed += OnEquipPerformed;
     }
 
     private void OnAttackPerformed(InputAction.CallbackContext context)
@@ -72,5 +75,11 @@ public class InputController : MonoBehaviour
     private void OnJumpCancelled(InputAction.CallbackContext context)
     {
         JumpEventCancelled?.Invoke();
+    }
+
+    private void OnEquipPerformed(InputAction.CallbackContext context)
+    {
+        float numberPressed = context.ReadValue<float>();
+        EquipEvent?.Invoke((int)numberPressed - 1);
     }
 }

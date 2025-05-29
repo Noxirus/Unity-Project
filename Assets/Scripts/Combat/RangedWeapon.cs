@@ -3,13 +3,13 @@ using UnityEngine;
 public class RangedWeapon : Weapon
 {
     [Header("Weapon Details")]
-    [SerializeField] private bool bAutomatic;
     [SerializeField] protected Transform muzzle;
+    [SerializeField] private bool bAutomatic;
     private bool _autoActive;
     
     [Header("Ammunition Details")]
-    [SerializeField] private int maxAmmo;
     [SerializeField] private int ammoCost = 1;
+    [SerializeField] private int maxAmmo;
     private int _currentAmmo;
     
     private void Start()
@@ -29,7 +29,6 @@ public class RangedWeapon : Weapon
     {
         base.Use();
         _currentAmmo = Mathf.Clamp(_currentAmmo - ammoCost, 0, maxAmmo);
-        Debug.Log(_currentAmmo);
         if(bAutomatic) _autoActive = true;
     }
     

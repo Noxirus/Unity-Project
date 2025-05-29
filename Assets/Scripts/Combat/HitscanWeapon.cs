@@ -12,7 +12,6 @@ public class HitscanWeapon : RangedWeapon
         if (!CanShoot()) return;
         base.Use();
         
-        Debug.DrawRay(muzzle.transform.position, muzzle.transform.up * range, Color.red, 5f);
         if (Physics.Raycast(muzzle.transform.position, muzzle.transform.up, out RaycastHit hit, range, targetMask))
         {
             if (hit.transform.CompareTag("Enemy"))

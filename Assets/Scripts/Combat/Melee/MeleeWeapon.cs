@@ -1,5 +1,3 @@
-
-using System;
 using UnityEngine;
 
 public class MeleeWeapon : Weapon
@@ -10,9 +8,7 @@ public class MeleeWeapon : Weapon
     {
         if(_onCooldown) return;
         base.Use();
-        Debug.Log("Used Melee Attack");
         Vector3 hitBoxCenter = GetHitBoxCenter();
-        
         Collider[] hitTargets = Physics.OverlapBox(hitBoxCenter, meleeConfig.hitboxExtents, transform.rotation, meleeConfig.hitboxMask);
 
         foreach (Collider target in hitTargets)
@@ -20,18 +16,20 @@ public class MeleeWeapon : Weapon
             Enemy targetEnemy = target.gameObject.GetComponent<Enemy>();
             if (targetEnemy != null)
             {
-                Debug.Log("Hit: " + targetEnemy.name);
-                Rigidbody enemyRb = target.gameObject.GetComponent<Rigidbody>();
-                if (enemyRb != null)
-                {
-                    Vector3 knockBackDir = targetEnemy.transform.position - transform.position;
-                    knockBackDir.Normalize();
-                    enemyRb.AddForce(knockBackDir * meleeConfig.knockbackForce, ForceMode.Impulse);
-                }
+                KnockBackTarget(targetEnemy.gameObject);
             }
         }
-        
-        
+    }
+
+    private void KnockBackTarget(GameObject target)
+    {
+        Rigidbody enemyRb = target.gameObject.GetComponent<Rigidbody>();
+        if (enemyRb != null)
+        {
+            Vector3 knockBackDir = target.transform.position - transform.position;
+            knockBackDir.Normalize();
+            enemyRb.AddForce(knockBackDir * meleeConfig.knockbackForce, ForceMode.Impulse);
+        }
     }
 
     private void OnDrawGizmos()

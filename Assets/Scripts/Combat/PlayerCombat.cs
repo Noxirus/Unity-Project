@@ -18,16 +18,16 @@ public class PlayerCombat : MonoBehaviour
 
     private void Start()
     {
-        _inputController.AttackEvent += FireWeapon;
-        _inputController.AttackEventCancelled += StopFiring;
+        _inputController.AttackEvent += UseWeapon;
+        _inputController.AttackEventCancelled += StopUsingWeapon;
     }
 
-    void FireWeapon()
+    void UseWeapon()
     {
-        equippedWeapon.Fire();
+        equippedWeapon.Use();
     }
-    void StopFiring()
+    void StopUsingWeapon()
     {
-        equippedWeapon.StopFiring();
+        equippedWeapon.StopUsing();
     }
 }

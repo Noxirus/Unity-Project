@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class ProjectileWeapon : Weapon
+public class ProjectileWeapon : RangedWeapon
 {
     [Header("Projectile Details")]
     [SerializeField] private Projectile projectile;
 
-    public override void Fire()
+    public override void Use()
     {
         if (!CanShoot()) return;
-        base.Fire();
+        base.Use();
         
         Instantiate(projectile, muzzle.transform.position, muzzle.transform.rotation);
     }

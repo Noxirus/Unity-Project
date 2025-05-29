@@ -14,7 +14,7 @@ public class ProjectileBullet : Projectile
             Destroy(other.gameObject);
         }
         Instantiate(impactParticles, transform.position, transform.rotation);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         // Play impact particles
     }
 }

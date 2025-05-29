@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -6,9 +8,22 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float projectileSpeed = 10f;
     [SerializeField] protected float projectileLifeTime = 3f;
     [SerializeField] protected ParticleSystem impactParticles;
+
+    WaitForSeconds projectileWait;
     
-    private void Start()
+    private void Awake()
     {
-        Destroy(gameObject, projectileLifeTime);
+        projectileWait = new WaitForSeconds(projectileSpeed);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DeactivateProjectile());
+    }
+
+    IEnumerator DeactivateProjectile()
+    {
+        yield return projectileWait;
+        gameObject.SetActive(false);
     }
 }

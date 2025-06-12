@@ -15,10 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform lookTarget;
     private Vector2 _lookRotation;
     
+    private Animator _playerAnimator;
+    
     private void Awake()
     {
         _inputController = GetComponent<InputController>();
         _characterController = GetComponent<CharacterController>();
+        _playerAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -38,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            _playerAnimator.SetTrigger("DoAFlip");
+        }
+        
         Vector3 targetDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
         Vector3 targetVelocity = targetDirection * movementConfig.targetMoveSpeed;
         
@@ -53,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         
         transform.Rotate(Vector3.up, _lookRotation.x * movementConfig.lookSpeed);
         lookTarget.Rotate(Vector3.right, -_lookRotation.y * movementConfig.lookSpeed);
+        _playerAnimator.SetFloat("MoveSpeed", _currentVelocity.magnitude);
     }
 
     private void HandleMoveInput(Vector2 movement)

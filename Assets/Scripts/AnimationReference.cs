@@ -8,11 +8,6 @@ public class AnimationReference : MonoBehaviour
     {
         _zombieAnimator = GetComponent<Animator>();
     }
-
-    public void TestFunction()
-    {
-        Debug.Log("TestFunction");
-    }
     
     void Update()
     {

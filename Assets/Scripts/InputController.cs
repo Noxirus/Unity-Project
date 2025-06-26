@@ -16,6 +16,8 @@ public class InputController : MonoBehaviour
     public event Action AttackEventCancelled;
     
     public event Action<int> EquipEvent;
+
+    public event Action InteractEvent;
     
     private void Awake()
     {
@@ -35,6 +37,12 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Attack.performed += OnAttackPerformed;
         _gameControls.Player.Attack.canceled += OnAttackCancelled;
         _gameControls.Player.EquipItem.performed += OnEquipPerformed;
+        _gameControls.Player.Interact.performed += OnInteractPerformed;
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        InteractEvent?.Invoke();
     }
 
     private void OnAttackPerformed(InputAction.CallbackContext context)

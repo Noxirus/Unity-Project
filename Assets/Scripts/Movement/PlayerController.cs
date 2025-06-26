@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private InputController _inputController;
     private CharacterController _characterController;
@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _lookRotation;
     
     private Animator _playerAnimator;
+    
+    [Header("Interaction")]
+    [SerializeField] LayerMask interactLayer;
+    private readonly float _interactRadius = 3f;
     
     private void Awake()
     {
@@ -36,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
             _inputController.MoveEvent += HandleMoveInput;
             _inputController.JumpEvent += Jump;
             _inputController.LookEvent += HandleLookRotation;
+            _inputController.InteractEvent += AttemptInteract;
         }
     }
 
@@ -64,6 +69,24 @@ public class PlayerMovement : MonoBehaviour
         _playerAnimator.SetFloat("MoveSpeed", _currentVelocity.magnitude);
     }
 
+    private void AttemptInteract()
+    {
+        RaycastHit[] hitInfoResults = Physics.SphereCastAll(
+            transform.position,
+            _interactRadius,
+            Vector3.one,
+            50f,
+            interactLayer);
+        foreach (RaycastHit hitInfo in hitInfoResults)
+        {
+            IInteractable interactable = hitInfo.collider.GetComponent<IInteractable>();
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
+        }
+    }
+
     private void HandleMoveInput(Vector2 movement)
     {
         _moveInput = movement;
@@ -90,11 +113,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
-        Vector3 end = origin + Vector3.down * .6f;
 
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(origin, .5f);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(end, .5f);
+        Gizmos.DrawWireSphere(origin, _interactRadius);
     }
 }

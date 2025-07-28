@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ReferenceScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Persistence.unity
+    guid: 65845d07bdd18b74c93d078bb3811f29
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e63faebe6af7a714a89cd1e0cc89e434
+  - enabled: 1
+    path: Assets/Scenes/KrakenScene.unity
+    guid: e296c67ebda134e43adcd1ecf0074c12
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

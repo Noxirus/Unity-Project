@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +33,21 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        GameData gameData = SaveManager.Instance.LoadGame();
+        
+        if (gameData != null)
+        {
+            transform.position = gameData.PlayerPosition;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameData gameData = new GameData();
+        gameData.PlayerPosition = transform.position;
+        gameData.PlayerScore = new Random().Next(0, 100);
+        gameData.PlayerName = "Fred";
+        SaveManager.Instance.SaveGame(gameData);
     }
 
     private void OnEnable()

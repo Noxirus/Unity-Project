@@ -9,7 +9,8 @@ public class PlayerCombat : MonoBehaviour
     
     [Header("Weapon Details")]
     [SerializeField] private Weapon equippedWeapon;
-
+    [SerializeField] private AudioClip shootSoundEffect;
+    
     private void Awake()
     {
         _inputController = GetComponent<InputController>();
@@ -44,6 +45,7 @@ public class PlayerCombat : MonoBehaviour
     void UseWeapon()
     {
         equippedWeapon.Use();
+        AudioManager.Instance.PlaySoundEffect(shootSoundEffect, transform.position);
     }
     void StopUsingWeapon()
     {

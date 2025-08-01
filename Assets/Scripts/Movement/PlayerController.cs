@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
@@ -22,12 +23,19 @@ public class PlayerController : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] LayerMask interactLayer;
     private readonly float _interactRadius = 3f;
+
+    [Header("Health")] 
+    private float _maxHealth = 100f;
+    private float _currentHealth;
+    public UnityEvent<float> OnPlayerTakeDamage;
+    
     
     private void Awake()
     {
         _inputController = GetComponent<InputController>();
         _characterController = GetComponent<CharacterController>();
         _playerAnimator = GetComponentInChildren<Animator>();
+        _currentHealth = 50.0f;
     }
 
     private void Start()
@@ -35,10 +43,17 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         GameData gameData = SaveManager.Instance.LoadGame();
         
+        
         if (gameData != null)
         {
             transform.position = gameData.PlayerPosition;
         }
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, _maxHealth);
+        OnPlayerTakeDamage.Invoke(GetHealthPercentage());
     }
 
     private void OnDestroy()
@@ -133,5 +148,10 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(origin, _interactRadius);
+    }
+
+    public float GetHealthPercentage()
+    {
+        return _currentHealth / _maxHealth;
     }
 }

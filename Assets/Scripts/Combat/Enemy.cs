@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -19,6 +20,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float chaseSpeed = 5f;
     [SerializeField] GameObject currentTarget;
     NavMeshAgent _navMeshAgent;
+
+    [Header("Combat")] 
+    private float _damage = 5.0f;
+    private float _attackCooldown = 2.0f;
+    private bool _canAttack = true;
 
     private void Start()
     {
@@ -48,17 +54,17 @@ public class Enemy : MonoBehaviour
     
     void IdleBehavior()
     {
-        Debug.Log("Idling");
+        //Debug.Log("Idling");
     }
 
     void PatrolBehavior()
     {
-        Debug.Log("Patrolling");
+        //Debug.Log("Patrolling");
     }
 
     void ChaseBehavior()
     {
-        Debug.Log("Chasing");
+        //Debug.Log("Chasing");
         transform.position = Vector3.MoveTowards(
             transform.position, 
             currentTarget.transform.position, 
@@ -77,13 +83,32 @@ public class Enemy : MonoBehaviour
 
     void AttackBehavior()
     {
-        Debug.Log("Attacking");
+        
         float currentDistance = Vector3.Distance(transform.position, currentTarget.transform.position);
         if (currentDistance > attackDistance)
         {
             currentState = EnemyAIState.Chase;
         }
+
+        if (_canAttack)
+        {
+            StartCoroutine(AttackTarget());
+        }
         // As long as the player is X distance, loop through attacking functionality
+    }
+
+    private IEnumerator AttackTarget()
+    {
+        PlayerController player = currentTarget.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            Debug.Log("Hit Player");
+            player.TakeDamage(_damage);
+        }
+
+        _canAttack = false;
+        yield return new WaitForSeconds(_attackCooldown);
+        _canAttack = true;
     }
 
     private void OnTriggerEnter(Collider other)
